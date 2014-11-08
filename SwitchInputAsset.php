@@ -7,7 +7,7 @@
  * @version 1.0.0
  */
 
-namespace kartik\switch;
+namespace kartik\switchinput;
 
 /**
  * Asset bundle for Switch Widget
@@ -21,8 +21,8 @@ class SwitchInputAsset extends \kartik\base\AssetBundle
     public function init()
     {
         $this->setSourcePath(__DIR__ . '/assets');
-        $this->setupAssets('css', ['css/bootstrap-switch']);
-        $this->setupAssets('js', ['js/bootstrap-switch']);
+        $this->setupAssets('css', ['css/bootstrap-switchinput']);
+        $this->setupAssets('js', ['js/bootstrap-switchinput']);
         parent::init();
     }
 }

@@ -7,7 +7,7 @@
  * @version 1.0.0
  */
 
-namespace kartik\switch;
+namespace kartik\switchinput;
 
 use Yii;
 use yii\helpers\Html;
@@ -17,11 +17,11 @@ use yii\base\InvalidConfigException;
 /**
  * Switch widget is a Yii2 wrapper for the Bootstrap Switch plugin by Mattia, Peter, & Emanuele.
  * This input widget is a jQuery based replacement for checkboxes and radio buttons and converts
- * them to toggle switches.
+ * them to toggle switchinputes.
  *
  * @author Kartik Visweswaran <kartikv2@gmail.com>
  * @since 1.0
- * @see http://www.bootstrap-switch.org/
+ * @see http://www.bootstrap-switchinput.org/
  */
 class SwitchInput extends \kartik\base\InputWidget
 {
