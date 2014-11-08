@@ -17,7 +17,6 @@ namespace kartik\switchinput;
  */
 class SwitchInputAsset extends \kartik\base\AssetBundle
 {
-
     public function init()
     {
         $this->setSourcePath(__DIR__ . '/assets');
