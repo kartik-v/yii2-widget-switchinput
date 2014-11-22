@@ -21,7 +21,7 @@ use yii\base\InvalidConfigException;
  *
  * @author Kartik Visweswaran <kartikv2@gmail.com>
  * @since 1.0
- * @see http://www.bootstrap-switchinput.org/
+ * @see http://www.bootstrap-switch.org/
  */
 class SwitchInput extends \kartik\base\InputWidget
 {
