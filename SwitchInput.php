@@ -120,7 +120,7 @@ class SwitchInput extends \kartik\base\InputWidget
             $labelOptions = ArrayHelper::merge($this->labelOptions, ArrayHelper::getValue($item, 'labelOptions', []));
             $value = ArrayHelper::getValue($item, 'value', null);
             $options['value'] = $value;
-            $input = Html::radio($this->name, false, $options);
+            $input = Html::radio($this->name, ($value == $this->value), $options);
 
             $output .= Html::label($label, $this->name, $labelOptions) . "\n" .
                 (($this->inlineLabel) ? $input : Html::tag('div', $input)) . "\n" .

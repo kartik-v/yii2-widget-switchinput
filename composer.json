@@ -15,6 +15,7 @@
     "require": {
         "kartik-v/yii2-krajee-base": "*"
     },
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "kartik\\switchinput\\": ""
