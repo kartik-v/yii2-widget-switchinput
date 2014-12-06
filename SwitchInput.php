@@ -54,7 +54,7 @@ class SwitchInput extends \kartik\base\InputWidget
     public $indeterminateValue = null;
     
     /**
-     * @var array HTML attributes for the toggle indicator to turn indeterminate 
+     * @var array | boolean HTML attributes for the toggle indicator to turn indeterminate 
      * state on and off. The following special attributes are recognized:
      * - `label`: string, the indeterminate toggle icon markup. Defaults to `&times;`
      * If this is set to `false` the indeterminate toggle icon will not be shown. 
