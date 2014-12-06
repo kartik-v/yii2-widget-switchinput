@@ -4,7 +4,7 @@
  * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014
  * @package yii2-widgets
  * @subpackage yii2-widget-switchinput
- * @version 1.1.0
+ * @version 1.2.0
  */
 
 namespace kartik\switchinput;
@@ -20,7 +20,7 @@ class SwitchInputAsset extends \kartik\base\AssetBundle
     public function init()
     {
         $this->setSourcePath(__DIR__ . '/assets');
-        $this->setupAssets('css', ['css/bootstrap-switch']);
+        $this->setupAssets('css', ['css/bootstrap-switch', 'css/bootstrap-switch-kv']);
         $this->setupAssets('js', ['js/bootstrap-switch']);
         parent::init();
     }

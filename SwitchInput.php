@@ -4,7 +4,7 @@
  * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014
  * @package yii2-widgets
  * @subpackage yii2-widget-switchinput
- * @version 1.1.0
+ * @version 1.2.0
  */
 
 namespace kartik\switchinput;
@@ -13,6 +13,7 @@ use Yii;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\base\InvalidConfigException;
+use yii\web\View;
 
 /**
  * Switch widget is a Yii2 wrapper for the Bootstrap Switch plugin by Mattia, Peter, & Emanuele.
@@ -30,11 +31,36 @@ class SwitchInput extends \kartik\base\InputWidget
     const RADIO = 2;
 
     /**
+     * @inherit doc
+     */
+    public $pluginName = 'bootstrapSwitch';
+    
+    /**
      * @var integer the input type - one
      * of the constants above.
      */
     public $type = self::CHECKBOX;
 
+    /**
+     * @var boolean whether to enable third indeterminate behavior when type 
+     * is `SwitchInput::CHECKBOX`. Defaults to `false`.
+     */
+    public $tristate = false;
+
+    /**
+     * @var string|int the value for indeterminate state when `tristate` is true and
+     * type is `SwitchInput::CHECKBOX`. Defaults to `null`.
+     */
+    public $indeterminateValue = null;
+    
+    /**
+     * @var array HTML attributes for the toggle indicator to turn indeterminate 
+     * state on and off. The following special attributes are recognized:
+     * - `label`: string, the indeterminate toggle icon markup. Defaults to `&times;`
+     * If this is set to `false` the indeterminate toggle icon will not be shown. 
+     */
+    public $indeterminateToggle = [];
+    
     /**
      * @var array the list of items for radio input
      * (applicable only if `type` = 2). The following
@@ -71,10 +97,10 @@ class SwitchInput extends \kartik\base\InputWidget
     public $separator = " &nbsp;";
 
     /**
-     * @var array HTML attributes for the radio group container
+     * @var array HTML attributes for the container
      * (applicable only if `type` = 2)
      */
-    public $containerOptions = [];
+    public $containerOptions = ['class'=>'form-group'];
 
     /**
      * Initializes the widget
@@ -100,6 +126,7 @@ class SwitchInput extends \kartik\base\InputWidget
      * Renders the source Input for the Switch plugin.
      * Graceful fallback to a normal HTML checkbox or radio input
      * in case JQuery is not supported by the browser
+     * @return string
      */
     protected function renderInput()
     {
@@ -108,9 +135,12 @@ class SwitchInput extends \kartik\base\InputWidget
                 $this->options['label'] = null;
             }
             $input = $this->getInput('checkbox');
-            return ($this->inlineLabel) ? $input : Html::tag('div', $input);
+            $output = ($this->inlineLabel) ? $input : Html::tag('div', $input);
+            $output = $this->mergeIndToggle($output);
+            return Html::tag('div', $output, $this->containerOptions) . "\n";
         }
         $output = '';
+        Html::addCssClass($this->containerOptions, 'kv-switch-container');
         foreach ($this->items as $item) {
             if (!is_array($item)) {
                 continue;
@@ -126,12 +156,28 @@ class SwitchInput extends \kartik\base\InputWidget
                 (($this->inlineLabel) ? $input : Html::tag('div', $input)) . "\n" .
                 $this->separator;
         }
-        if (empty($this->containerOptions['class'])) {
-            $this->containerOptions['class'] = 'form-group';
-        }
         return Html::tag('div', $output, $this->containerOptions) . "\n";
     }
 
+    /**
+     * Merges the rendered indeterminate toggle indicator
+     * @var string $output the content to merge with the output
+     * @return string
+     */
+    protected function mergeIndToggle($output) {
+        if (!$this->tristate || $this->indeterminateToggle === false) {
+            return $output;
+        }
+        $icon = ArrayHelper::remove($this->indeterminateToggle, 'label', '&times;');
+        $this->indeterminateToggle['data-kv-switch'] = ($this->type == self::CHECKBOX) ? $this->options['id'] : $this->name;
+        Html::addCssClass($this->indeterminateToggle, 'close kv-ind-toggle');
+        $icon = Html::tag('span', $icon, $this->indeterminateToggle);
+        $options = ArrayHelper::remove($this->indeterminateToggle, 'containerOptions', []);
+        $size = 'kv-size-' . ArrayHelper::getValue($this->pluginOptions, 'size', 'normal');
+        Html::addCssClass($options, 'kv-ind-container '.$size);
+        return Html::tag('div', $icon . "\n" . $output, $options);
+    }
+    
     /**
      * Registers the needed assets
      */
@@ -139,13 +185,28 @@ class SwitchInput extends \kartik\base\InputWidget
     {
         $view = $this->getView();
         SwitchInputAsset::register($view);
-        if (!isset($this->pluginOptions['animate'])) {
-            $this->pluginOptions['animate'] = true;
+        $this->pluginOptions = array_replace_recursive(['animate' => true], $this->pluginOptions, [
+            'indeterminate' => (
+                $this->tristate && 
+                $this->value === $this->indeterminateValue && 
+                $this->type !== self::RADIO
+            ),
+            'disabled' => $this->disabled,
+            'readonly' => $this->readonly
+        ]);
+        $id = $this->type == self::RADIO ? 'jQuery("[name = \'' . $this->name . '\']")' : 'jQuery("#' . $this->options['id'] . '")';
+        $this->registerPlugin($this->pluginName, $id);
+        if ($this->indeterminateToggle === false || $this->type == self::RADIO) {
+            return;
         }
-        if ($this->type == self::RADIO) {
-            $this->registerPlugin('bootstrapSwitch', 'jQuery("[name = \'' . $this->name . '\']")');
-        } else {
-            $this->registerPlugin('bootstrapSwitch');
-        }
+        $tog = 'jQuery("[data-kv-switch=\'' . $this->options['id'] . '\']")';
+        $js = "{$tog}.on('click',function(){
+            var \$el={$id}, val;
+            \$el.bootstrapSwitch('toggleIndeterminate');            
+            val = \$el.prop('indeterminate') ? '{$this->indeterminateValue}' : 
+                (\$el.is(':checked').length > 0 ? 1 : 0);
+            \$el.val(val);
+        });";
+        $view->registerJs($js);
     }
 }
