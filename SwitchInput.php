@@ -185,15 +185,16 @@ class SwitchInput extends \kartik\base\InputWidget
     {
         $view = $this->getView();
         SwitchInputAsset::register($view);
-        $this->pluginOptions = array_replace_recursive(['animate' => true], $this->pluginOptions, [
-            'indeterminate' => (
-                $this->tristate && 
-                $this->value === $this->indeterminateValue && 
-                $this->type !== self::RADIO
-            ),
-            'disabled' => $this->disabled,
-            'readonly' => $this->readonly
-        ]);
+        if (empty($this->pluginOptions['animate']) {
+            $this->pluginOptions['animate'] = true;
+        }
+        $this->pluginOptions['indeterminate'] = (
+            $this->tristate && 
+            $this->value === $this->indeterminateValue && 
+            $this->type !== self::RADIO
+        );
+        $this->pluginOptions['disabled'] = $this->disabled;
+        $this->pluginOptions['readonly'] = $this->readonly;
         $id = $this->type == self::RADIO ? 'jQuery("[name = \'' . $this->name . '\']")' : 'jQuery("#' . $this->options['id'] . '")';
         $this->registerPlugin($this->pluginName, $id);
         if (!$this->tristate || $this->indeterminateToggle === false || $this->type == self::RADIO) {
