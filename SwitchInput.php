@@ -196,7 +196,7 @@ class SwitchInput extends \kartik\base\InputWidget
         ]);
         $id = $this->type == self::RADIO ? 'jQuery("[name = \'' . $this->name . '\']")' : 'jQuery("#' . $this->options['id'] . '")';
         $this->registerPlugin($this->pluginName, $id);
-        if (!$tristate || $this->indeterminateToggle === false || $this->type == self::RADIO) {
+        if (!$this->tristate || $this->indeterminateToggle === false || $this->type == self::RADIO) {
             return;
         }
         $tog = 'jQuery("[data-kv-switch=\'' . $this->options['id'] . '\']")';
