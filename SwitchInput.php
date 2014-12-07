@@ -196,17 +196,17 @@ class SwitchInput extends \kartik\base\InputWidget
         ]);
         $id = $this->type == self::RADIO ? 'jQuery("[name = \'' . $this->name . '\']")' : 'jQuery("#' . $this->options['id'] . '")';
         $this->registerPlugin($this->pluginName, $id);
-        if ($this->indeterminateToggle === false || $this->type == self::RADIO) {
+        if (!$tristate || $this->indeterminateToggle === false || $this->type == self::RADIO) {
             return;
         }
         $tog = 'jQuery("[data-kv-switch=\'' . $this->options['id'] . '\']")';
         $js = "{$tog}.on('click',function(){
-            var \$el={$id}, val;
-            \$el.bootstrapSwitch('toggleIndeterminate');            
-            val = \$el.prop('indeterminate') ? '{$this->indeterminateValue}' : 
-                (\$el.is(':checked').length > 0 ? 1 : 0);
-            \$el.val(val);
-        });";
+    var \$el={$id}, val;
+    \$el.bootstrapSwitch('toggleIndeterminate');            
+    val = \$el.prop('indeterminate') ? '{$this->indeterminateValue}' : 
+        (\$el.is(':checked').length > 0 ? 1 : 0);
+    \$el.val(val);
+});";
         $view->registerJs($js);
     }
 }
