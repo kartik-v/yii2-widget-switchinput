@@ -1,12 +1,12 @@
 version 1.2.0
 =============
-**Date:** 06-Dec-2014
+**Date:** 08-Dec-2014
 
 - (bug #5): Fix checked state for checkboxes in `\kartik\base\InputWidget`.
 - (bug #6): Add indeterminate value support and validation for checkboxes
 - (bug #7): Recognize disabled and readonly in pluginOptions automatically
 - (bug #8): Enhanced styling for radio switches and new indeterminate toggle indicator
-- (bug #10, #11): Fix missing bracket in code.
+- (bug #10, #11 ): Fix missing bracket in code.
 
 version 1.1.0
 =============
