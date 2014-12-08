@@ -6,6 +6,7 @@ version 1.2.0
 - (bug #6): Add indeterminate value support and validation for checkboxes
 - (bug #7): Recognize disabled and readonly in pluginOptions automatically
 - (bug #8): Enhanced styling for radio switches and new indeterminate toggle indicator
+- (bug #10, #11): Fix missing bracket in code.
 
 version 1.1.0
 =============

@@ -185,7 +185,7 @@ class SwitchInput extends \kartik\base\InputWidget
     {
         $view = $this->getView();
         SwitchInputAsset::register($view);
-        if (empty($this->pluginOptions['animate']) {
+        if (empty($this->pluginOptions['animate'])) {
             $this->pluginOptions['animate'] = true;
         }
         $this->pluginOptions['indeterminate'] = (
