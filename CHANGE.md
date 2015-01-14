@@ -1,3 +1,9 @@
+version 1.3.0
+=============
+**Date:** 14-Jan-2015
+
+- (enh #12): Upgrade bootstrap switch plugin to latest release and fixes kartik-v/yii2-widgets#219.
+
 version 1.2.0
 =============
 **Date:** 08-Dec-2014
