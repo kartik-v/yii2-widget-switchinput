@@ -1,11 +1,11 @@
 yii2-widget-switchinput
 =======================
 
-[![Latest Stable Version](https://poser.pugx.org/kartik-v/yii2-widget-switchinput/v/stable.svg)](https://packagist.org/packages/kartik-v/yii2-widget-switchinput)
-[![License](https://poser.pugx.org/kartik-v/yii2-widget-switchinput/license.svg)](https://packagist.org/packages/kartik-v/yii2-widget-switchinput)
-[![Total Downloads](https://poser.pugx.org/kartik-v/yii2-widget-switchinput/downloads.svg)](https://packagist.org/packages/kartik-v/yii2-widget-switchinput)
-[![Monthly Downloads](https://poser.pugx.org/kartik-v/yii2-widget-switchinput/d/monthly.png)](https://packagist.org/packages/kartik-v/yii2-widget-switchinput)
-[![Daily Downloads](https://poser.pugx.org/kartik-v/yii2-widget-switchinput/d/daily.png)](https://packagist.org/packages/kartik-v/yii2-widget-switchinput)
+[![Latest Stable Version](https://poser.pugx.org/kartik-v/yii2-widget-switchinput/v/stable)](https://packagist.org/packages/kartik-v/yii2-widget-switchinput)
+[![License](https://poser.pugx.org/kartik-v/yii2-widget-switchinput/license)](https://packagist.org/packages/kartik-v/yii2-widget-switchinput)
+[![Total Downloads](https://poser.pugx.org/kartik-v/yii2-widget-switchinput/downloads)](https://packagist.org/packages/kartik-v/yii2-widget-switchinput)
+[![Monthly Downloads](https://poser.pugx.org/kartik-v/yii2-widget-switchinput/d/monthly)](https://packagist.org/packages/kartik-v/yii2-widget-switchinput)
+[![Daily Downloads](https://poser.pugx.org/kartik-v/yii2-widget-switchinput/d/daily)](https://packagist.org/packages/kartik-v/yii2-widget-switchinput)
 
 The SwitchInput widget turns checkboxes and radio buttons into toggle switchinputes. The plugin is a wrapper for the [Bootstrap Switch Plugin](http://www.bootstrap-switchinput.org) and is specially styled for Bootstrap 3.
 
