@@ -5,6 +5,8 @@ Change Log: `yii2-widget-switchinput`
 
 **Date:** 10-Jan-2016
 
+- (bug #18): Correct typo in documentation and demos.
+- (bug #20): Correct `pluginOptions['animate']` initialization.
 - Update to latest release of switch input plugin.
 - Code formatting enhancements and update year.
 

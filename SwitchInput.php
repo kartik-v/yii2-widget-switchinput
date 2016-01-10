@@ -25,7 +25,6 @@ use kartik\base\InputWidget;
  */
 class SwitchInput extends InputWidget
 {
-
     const CHECKBOX = 1;
     const RADIO = 2;
 
@@ -177,29 +176,28 @@ class SwitchInput extends InputWidget
     {
         $view = $this->getView();
         SwitchInputAsset::register($view);
-        if (empty($this->pluginOptions['animate'])) {
+        if (!isset($this->pluginOptions['animate']) || !is_bool($this->pluginOptions['animate'])) {
             $this->pluginOptions['animate'] = true;
         }
-        $this->pluginOptions['indeterminate'] = (
-            $this->tristate &&
-            $this->value === $this->indeterminateValue &&
-            $this->type !== self::RADIO
-        );
+        $ind = $this->indeterminateValue;
+        $this->pluginOptions['indeterminate'] = $this->tristate && $this->value === $ind && $this->type !== self::RADIO;
         $this->pluginOptions['disabled'] = $this->disabled;
         $this->pluginOptions['readonly'] = $this->readonly;
-        $id = $this->type == self::RADIO ? 'jQuery("[name = \'' . $this->name . '\']")' : 'jQuery("#' . $this->options['id'] . '")';
+        $id = $this->type == self::RADIO ? 'jQuery("[name = \'' . $this->name . '\']")' :
+            'jQuery("#' . $this->options['id'] . '")';
         $this->registerPlugin($this->pluginName, $id);
         if (!$this->tristate || $this->indeterminateToggle === false || $this->type == self::RADIO) {
             return;
         }
         $tog = 'jQuery("[data-kv-switch=\'' . $this->options['id'] . '\']")';
-        $js = "{$tog}.on('click',function(){
-    var \$el={$id}, val;
-    \$el.bootstrapSwitch('toggleIndeterminate');            
-    val = \$el.prop('indeterminate') ? '{$this->indeterminateValue}' : 
-        (\$el.is(':checked').length > 0 ? 1 : 0);
-    \$el.val(val);
-});";
+        $js = <<< JS
+{$tog}.on('click',function(){
+    var el={$id}, val;
+    el.{$this->pluginName}('toggleIndeterminate');
+    val = el.prop('indeterminate') ? '{$ind}' : (el.is(':checked').length > 0 ? 1 : 0);
+    el.val(val);
+});
+JS;
         $view->registerJs($js);
     }
 }
