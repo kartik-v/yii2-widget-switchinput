@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014
+ * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2016
  * @package yii2-widgets
  * @subpackage yii2-widget-switchinput
- * @version 1.3.0
+ * @version 1.3.1
  */
 
 namespace kartik\switchinput;
@@ -13,75 +13,64 @@ use Yii;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\base\InvalidConfigException;
-use yii\web\View;
+use kartik\base\InputWidget;
 
 /**
- * Switch widget is a Yii2 wrapper for the Bootstrap Switch plugin by Mattia, Peter, & Emanuele.
- * This input widget is a jQuery based replacement for checkboxes and radio buttons and converts
- * them to toggle switchinputes.
+ * Switch widget is a Yii2 wrapper for the Bootstrap Switch plugin by Mattia, Peter, & Emanuele. This input widget is a
+ * jQuery based replacement for checkboxes and radio buttons and converts them to toggle switchinputes.
  *
  * @author Kartik Visweswaran <kartikv2@gmail.com>
  * @since 1.0
  * @see http://www.bootstrap-switch.org/
  */
-class SwitchInput extends \kartik\base\InputWidget
+class SwitchInput extends InputWidget
 {
 
     const CHECKBOX = 1;
     const RADIO = 2;
 
     /**
-     * @inherit doc
-     */
-    public $pluginName = 'bootstrapSwitch';
-    
-    /**
-     * @var integer the input type - one
-     * of the constants above.
+     * @var int the input type - one of the constants above.
      */
     public $type = self::CHECKBOX;
 
     /**
-     * @var boolean whether to enable third indeterminate behavior when type 
-     * is `SwitchInput::CHECKBOX`. Defaults to `false`.
+     * @var boolean whether to enable third indeterminate behavior when type is `SwitchInput::CHECKBOX`. Defaults to
+     *     `false`.
      */
     public $tristate = false;
 
     /**
-     * @var string|int the value for indeterminate state when `tristate` is true and
-     * type is `SwitchInput::CHECKBOX`. Defaults to `null`.
+     * @var string|int the value for indeterminate state when `tristate` is true and type is `SwitchInput::CHECKBOX`.
+     *     Defaults to `null`.
      */
     public $indeterminateValue = null;
-    
+
     /**
-     * @var array | boolean HTML attributes for the toggle indicator to turn indeterminate 
-     * state on and off. The following special attributes are recognized:
+     * @var array | boolean HTML attributes for the toggle indicator to turn indeterminate state on and off. The
+     *     following special attributes are recognized:
      * - `label`: string, the indeterminate toggle icon markup. Defaults to `&times;`
-     * If this is set to `false` the indeterminate toggle icon will not be shown. 
+     * If this is set to `false` the indeterminate toggle icon will not be shown.
      */
     public $indeterminateToggle = [];
-    
+
     /**
-     * @var array the list of items for radio input
-     * (applicable only if `type` = 2). The following
-     * keys could be setup:
-     * - label: string the label of each radio item. If this is
-     *   set to false or null, the label will not be displayed.
+     * @var array the list of items for radio input (applicable only if `type` = 2). The following keys could be setup:
+     * - label: string the label of each radio item. If this is set to `false` or null, the label will not be displayed.
      * - value: string the value of each radio item
-     * - options: HTML attributes for the radio item
-     * - labelOptions: HTML attributes for each radio item label
+     * - options: array, HTML attributes for the radio item
+     * - labelOptions: array, HTML attributes for each radio item label
      */
     public $items = [];
 
     /**
-     * @var boolean whether label is aligned on same line. Defaults to true.
-     * If set to false, the label and input will be on separate lines.
+     * @var boolean whether label is aligned on same line. Defaults to `true`. If set to `false`, the label and input
+     *     will be on separate lines.
      */
     public $inlineLabel = true;
 
     /**
-     * @var array default HTML attributes for each radio item
-     * (applicable only if `type` = 2)
+     * @var array default HTML attributes for each radio item (applicable only if `type` = 2)
      */
     public $itemOptions = [];
 
@@ -91,25 +80,26 @@ class SwitchInput extends \kartik\base\InputWidget
     public $labelOptions = [];
 
     /**
-     * @var string the separator content between each radio item
-     * (applicable only if `type` = 2)
+     * @var string the separator content between each radio item (applicable only if `type` = 2)
      */
     public $separator = " &nbsp;";
 
     /**
-     * @var array HTML attributes for the container
-     * (applicable only if `type` = 2)
+     * @var array HTML attributes for the container (applicable only if `type` = 2)
      */
-    public $containerOptions = ['class'=>'form-group'];
+    public $containerOptions = ['class' => 'form-group'];
 
     /**
-     * Initializes the widget
-     *
-     * @throw InvalidConfigException
+     * @inheritdoc
      */
-    public function init()
+    public $pluginName = 'bootstrapSwitch';
+
+    /**
+     * @inheritdoc
+     */
+    public function run()
     {
-        parent::init();
+        parent::run();
         if (empty($this->type) && $this->type !== self::CHECKBOX && $this->type !== self::RADIO) {
             throw new InvalidConfigException("You must define a valid 'type' which must be either 1 (for checkbox) or 2 (for radio).");
         }
@@ -123,9 +113,9 @@ class SwitchInput extends \kartik\base\InputWidget
     }
 
     /**
-     * Renders the source Input for the Switch plugin.
-     * Graceful fallback to a normal HTML checkbox or radio input
-     * in case JQuery is not supported by the browser
+     * Renders the source Input for the Switch plugin. Graceful fallback to a normal HTML checkbox or radio input in
+     * case JQuery is not supported by the browser
+     *
      * @return string
      */
     protected function renderInput()
@@ -161,10 +151,12 @@ class SwitchInput extends \kartik\base\InputWidget
 
     /**
      * Merges the rendered indeterminate toggle indicator
+     *
      * @var string $output the content to merge with the output
      * @return string
      */
-    protected function mergeIndToggle($output) {
+    protected function mergeIndToggle($output)
+    {
         if (!$this->tristate || $this->indeterminateToggle === false) {
             return $output;
         }
@@ -174,10 +166,10 @@ class SwitchInput extends \kartik\base\InputWidget
         $icon = Html::tag('span', $icon, $this->indeterminateToggle);
         $options = ArrayHelper::remove($this->indeterminateToggle, 'containerOptions', []);
         $size = 'kv-size-' . ArrayHelper::getValue($this->pluginOptions, 'size', 'normal');
-        Html::addCssClass($options, 'kv-ind-container '.$size);
+        Html::addCssClass($options, 'kv-ind-container ' . $size);
         return Html::tag('div', $icon . "\n" . $output, $options);
     }
-    
+
     /**
      * Registers the needed assets
      */
@@ -189,8 +181,8 @@ class SwitchInput extends \kartik\base\InputWidget
             $this->pluginOptions['animate'] = true;
         }
         $this->pluginOptions['indeterminate'] = (
-            $this->tristate && 
-            $this->value === $this->indeterminateValue && 
+            $this->tristate &&
+            $this->value === $this->indeterminateValue &&
             $this->type !== self::RADIO
         );
         $this->pluginOptions['disabled'] = $this->disabled;
